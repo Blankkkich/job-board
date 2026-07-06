@@ -41,9 +41,14 @@
       <p class="m-0 mb-1.5 text-[17px] font-semibold text-base01">No roles match yet</p>
       <p class="m-0 text-sm text-base1">Try a different search or switch filters.</p>
     </div>
-    <div v-else class="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-5">
-      <JobCard v-for="job in filtered" :key="job.id" :job="job"/>
-    </div>
+    <template v-else>
+      <JobsTable :jobs="filtered"/>
+      <Pagination
+          :current-page="page"
+          :total-pages="totalPages"
+          @update:current-page="goToPage"
+      />
+    </template>
   </section>
 </template>
 
@@ -54,9 +59,15 @@ const {data: jobs, isPending} = useJobsList()
 
 const search = ref('')
 const statusFilter = ref<'open' | 'all' | 'filled'>('open')
+const route = useRoute()
+const page = computed(() => Number(route.query.page ?? 1))
+
+function goToPage(p: number) {
+  navigateTo({query: {...route.query, page: p}})
+}
 
 const filtered = computed(() => {
-  const list = jobs.value ?? []
+  const list = jobs.value?.items ?? []
   const term = search.value.trim().toLowerCase()
 
   return list.filter((job) => {
@@ -70,8 +81,18 @@ const filtered = computed(() => {
   })
 })
 
+const totalPages = computed(() => {
+  const total = jobs.value?.total ?? 0
+  const pageSize = jobs.value?.pageSize ?? 1
+  return Math.max(1, Math.ceil(total / pageSize))
+})
+
 const countLabel = computed(() => {
   const count = filtered.value.length
   return `${count} ${count === 1 ? 'role' : 'roles'}`
+})
+
+watch([search, statusFilter], () => {
+  page.value = 1
 })
 </script>

@@ -15,3 +15,9 @@ export interface Job {
   applyUrl: string
   postedAt: string
 }
+
+export interface PaginatedJobs {
+  items: Job[]
+  total: number
+  pageSize: number
+}

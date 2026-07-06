@@ -28,5 +28,5 @@
 useHead({title: 'Jobify — Now Hiring'})
 
 const {data: jobs, isPending} = useJobsList()
-const featured = computed(() => (jobs.value ?? []).slice(0, 3))
+const featured = computed(() => (jobs.value?.items ?? []).slice(0, 3))
 </script>

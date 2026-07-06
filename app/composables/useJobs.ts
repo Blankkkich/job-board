@@ -1,12 +1,18 @@
 import {useQuery} from '@tanstack/vue-query'
 import {toValue, type MaybeRefOrGetter} from 'vue'
 import {onServerPrefetch} from "vue";
-import type {Job} from '~~/shared/types/job'
+import type {Job, PaginatedJobs} from '~~/shared/types/job'
 
 export function useJobsList() {
-    const query = useQuery({
-        queryKey: ['jobs'],
-        queryFn: () => $fetch<Job>(`/api/jobs`),
+    const route = useRoute()
+    const page = computed(() => Number(route.query.page ?? 1))
+
+    const fetcher = () =>
+        $fetch<PaginatedJobs>(`/api/jobs`, { query: { page: toValue(page)}})
+
+    const query = useQuery( {
+        queryKey: ['jobs', page],
+        queryFn: fetcher
     })
 
     onServerPrefetch(() => query.suspense())
