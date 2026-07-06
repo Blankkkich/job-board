@@ -10,8 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@tanstack/vue-query": "^5.101.2",
     "nuxt": "^4.4.8",
     "vue": "^3.5.38",
     "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.2",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.6"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "7.3.6"
+    }
   }
 }
