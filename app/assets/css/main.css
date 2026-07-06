@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+    /* Solarized palette — see https://ethanschoonover.com/solarized/ */
+    --color-base03: #002b36;
+    --color-base02: #073642;
+    --color-base01: #586e75;
+    --color-base00: #657b83;
+    --color-base0: #839496;
+    --color-base1: #93a1a1;
+    --color-base2: #eee8d5;
+    --color-base3: #fdf6e3;
+
+    --color-border: #ddd6c1;
+
+    --color-accent: #2aa198;
+    --color-accent-blue: #268bd2;
+    --color-accent-cyan: #2aa198;
+    --color-accent-violet: #6c71c4;
+    --color-accent-magenta: #d33682;
+    --color-accent-yellow: #b58900;
+
+    --color-open: #859900;
+    --color-filled: #93a1a1;
+
+    --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+    --radius-card: 0.875rem;
+    --radius-control: 0.5rem;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--color-base2);
+    color: var(--color-base00);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+input::placeholder {
+    color: var(--color-base1);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
